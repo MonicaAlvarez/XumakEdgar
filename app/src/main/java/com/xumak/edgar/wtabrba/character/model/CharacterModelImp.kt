@@ -20,7 +20,9 @@ class CharacterModelImp : CharacterMVP.Model {
 
     override fun requestCharacters(limit: Int, toSearch : String) {
         val options: MutableMap<String, String> = HashMap()
-        options["limit"] = limit.toString()
+        if(limit != 0) {
+            options["limit"] = limit.toString()
+        }
         if (!toSearch.isEmpty()){
             options["name"] = toSearch
         }

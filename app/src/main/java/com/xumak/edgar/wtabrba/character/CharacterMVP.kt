@@ -24,7 +24,7 @@ interface CharacterMVP {
     }
 
     interface Model{
-        fun requestCharacters(limit : Int, toSearch : String = "")
+        fun requestCharacters(limit : Int = 0, toSearch : String = "")
         fun setOnGetCharacterResponse(callback : OnCharacterServiceResponse)
     }
 }

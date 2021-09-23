@@ -25,7 +25,7 @@ class CharacterPresenterImp(val model: CharacterMVP.Model) : CharacterMVP.Presen
             view.noInternetConnection()
             return
         }
-        model.requestCharacters(limit)
+        model.requestCharacters()
     }
 
     override fun storeFavoriteCharacter(id: Int, name: String) {
@@ -50,7 +50,7 @@ class CharacterPresenterImp(val model: CharacterMVP.Model) : CharacterMVP.Presen
             view.noInternetConnection()
             return
         }
-        model.requestCharacters(limit, valueToSearch)
+        model.requestCharacters(0, valueToSearch)
     }
 
     override fun closeStore() {
