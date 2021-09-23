@@ -7,7 +7,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class CharacterModelImp() : CharacterMVP.Model {
+class CharacterModelImp : CharacterMVP.Model {
     init {
         DaggerServiceComponent.builder()
             .serviceModule(ServiceModule())
@@ -18,9 +18,12 @@ class CharacterModelImp() : CharacterMVP.Model {
     lateinit var service : ApiService
     private lateinit var callback : OnCharacterServiceResponse
 
-    override fun requestCharacters(limit: Int) {
+    override fun requestCharacters(limit: Int, toSearch : String) {
         val options: MutableMap<String, String> = HashMap()
         options["limit"] = limit.toString()
+        if (!toSearch.isEmpty()){
+            options["name"] = toSearch
+        }
         service.requestChacter(options).enqueue(object : Callback<List<ObjectResponse.Character>> {
             override fun onResponse(call: Call<List<ObjectResponse.Character>>, response: Response<List<ObjectResponse.Character>>) {
                 if (response.errorBody() == null){

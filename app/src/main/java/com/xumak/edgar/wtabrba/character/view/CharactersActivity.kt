@@ -24,10 +24,15 @@ class CharactersActivity : AppCompatActivity(), CharacterMVP.View, OnItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.character_activity_layout)
         (application as App).component.inject(this)
-        presenter.setView(this)
+        presenter.setView(this, applicationContext)
 
         currentFragment = CharacterListFragment(this, presenter)
         changeFragment(currentFragment)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.closeStore()
     }
 
     private fun changeFragment(currentFragment : Fragment){
@@ -38,7 +43,9 @@ class CharactersActivity : AppCompatActivity(), CharacterMVP.View, OnItemSelecte
         if (manager.findFragmentByTag(currentFragment.javaClass.canonicalName) == null) {
             transaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out)
             transaction.replace(R.id.frmContainer, currentFragment)
-            transaction.addToBackStack("backStack")
+            if(currentFragment !is CharacterListFragment) {
+                transaction.addToBackStack("backStack")
+            }
             transaction.commitAllowingStateLoss()
         }
     }
@@ -49,11 +56,23 @@ class CharactersActivity : AppCompatActivity(), CharacterMVP.View, OnItemSelecte
         }
     }
 
+    override fun noInternetConnection() {
+        Toast.makeText(this, R.string.no_interrnet_connection, Toast.LENGTH_SHORT).show()
+    }
+
     override fun showGetCharactersError(error: String) {
         Toast.makeText(this, error, Toast.LENGTH_LONG).show()
     }
 
     override fun onItemSelected(character: ObjectResponse.Character) {
-        changeFragment(CharacterDetailFragment(character))
+        changeFragment(CharacterDetailFragment(character, this))
+    }
+
+    override fun onFavoriteSelected(id: Int, name: String) {
+        presenter.storeFavoriteCharacter(id, name)
+    }
+
+    override fun onFavoriteUnselected(id: Int) {
+        presenter.deleteFavoriteCharacter(id)
     }
 }

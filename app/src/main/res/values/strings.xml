@@ -4,4 +4,7 @@
     <string name="lbl_occupation">Occupation</string>
     <string name="lbl_status">Status</string>
     <string name="lbl_portrayed">Portrayed</string>
+    <string name="lbl_title_list">Breaking Bad Characters</string>
+    <string name="search">Burcar</string>
+    <string name="no_interrnet_connection">Sin conexión a internet</string>
 </resources>

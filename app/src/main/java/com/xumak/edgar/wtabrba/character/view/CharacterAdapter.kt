@@ -22,13 +22,26 @@ class CharacterAdapter(var responseList :List<ObjectResponse.Character>, val lis
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         holder.txtName.text = responseList.get(position).name
         holder.txtNickname.text = responseList.get(position).nickname
-        val path = responseList.get(position).img
+        val path = responseList.get(position).img?: "" +R.mipmap.ic_launcher
 
         Picasso.get().load(path)
             .into(holder.imgThumbnail)
 
         holder.crdContainer.setOnClickListener {
             listener.onItemSelected(responseList.get(position))
+        }
+
+        holder.ivLikeItem.setImageResource(if (responseList.get(position).isSelected) R.drawable.ic_favorite else R.drawable.ic_favorite_empty)
+
+        holder.ivLikeItem.setOnClickListener {
+            if (responseList.get(position).isSelected){
+                responseList.get(position).isSelected = false
+                listener.onFavoriteUnselected(responseList.get(position).char_id)
+            }else{
+                responseList.get(position).isSelected = true
+                listener.onFavoriteSelected(responseList.get(position).char_id, responseList.get(position).name)
+            }
+            updateCharacterList(responseList)
         }
     }
 
@@ -37,7 +50,9 @@ class CharacterAdapter(var responseList :List<ObjectResponse.Character>, val lis
     }
 
     fun updateCharacterList(characterList :List<ObjectResponse.Character>){
-        responseList = characterList
+        responseList = characterList.sortedBy {
+            it.isSelected == false
+        }
         notifyDataSetChanged()
     }
 
@@ -46,5 +61,6 @@ class CharacterAdapter(var responseList :List<ObjectResponse.Character>, val lis
         val txtName = itemView.findViewById<TextView>(R.id.txtName)
         val txtNickname = itemView.findViewById<TextView>(R.id.txtNickname)
         val imgThumbnail = itemView.findViewById<ImageView>(R.id.imgThumbnail)
+        val ivLikeItem = itemView.findViewById<ImageView>(R.id.ivLikeItem)
     }
 }

@@ -47,6 +47,19 @@
         app:layout_constraintGuide_percent=".85"
         />
 
+    <ImageView
+        android:id="@+id/ivLikeDetail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight=".3"
+        android:src="@drawable/ic_favorite_empty"
+        app:layout_constraintStart_toEndOf="@id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline3"
+        app:layout_constraintVertical_bias=".3"
+        />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"

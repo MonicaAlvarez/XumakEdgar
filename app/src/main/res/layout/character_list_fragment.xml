@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/character_list_item"
+        android:visibility="gone"
         />
 
     <TextView
@@ -21,9 +22,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias=".2"
         style="@style/TextAppearance.AppCompat.SearchResult.Title"
         android:text="@string/no_data_to_show_msg"
         android:gravity="center"
-        android:visibility="gone"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
