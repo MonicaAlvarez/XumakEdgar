@@ -59,8 +59,8 @@ class CharacterListFragment(val listener: OnItemSelectedListener, val presenter:
         inflater.inflate(R.menu.search_menu, menu)
 
         val searchItem: MenuItem? = menu.findItem(R.id.action_search)
-        val searchView: SearchView? = searchItem?.actionView as SearchView
-        searchView!!.queryHint = getString(R.string.search)
+        val searchView: SearchView = searchItem?.actionView as SearchView
+        searchView.queryHint = getString(R.string.search)
         searchView.setOnQueryTextListener(this)
 
         super.onCreateOptionsMenu(menu, inflater)
